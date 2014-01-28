@@ -10,6 +10,7 @@ function sm_add_new() {
 	$("#sm_edit_mode").html("ADD Node Mode");
 	$("#sm_edit_node_id").val("");
 	sm_show_tab("sm_add");
+	xajax_ExtensionAjax("SiteManager", "sm_load_form", "");
 	//Set type to ADD
 }
 function sm_edit_node(id) {
