@@ -5,22 +5,31 @@ function sm_local_settings_update(ui, core) {
 }
 function sm_show_tab(t) {
 	$('#coreTabs a[href=#' + t + ']').tab("show");
+	
 }
 function sm_add_new() {
 	$("#sm_edit_mode").html("ADD Node Mode");
 	$("#sm_edit_node_id").val("");
 	sm_show_tab("sm_add");
+	sm_lock_form();
 	xajax_ExtensionAjax("SiteManager", "sm_load_form", "");
 	//Set type to ADD
 }
 function sm_edit_node(id) {
 	$("#sm_edit_mode").html("EDIT Node Mode");
 	$("#sm_edit_node_id").val(id);
+	sm_lock_form();
 	xajax_ExtensionAjax("SiteManager", "sm_load_form", id);
 	//Set type to MODIFY
 	//Load Data
 	//Show Tab
 	
+}
+function sm_lock_form() {
+	$("#sm_form :input").attr("disabled", true);
+}
+function sm_unlock_form() {
+	$("#sm_form :input").attr("disabled", false);
 }
 function sm_delete_node(id) {
 	//Confirm
@@ -51,7 +60,7 @@ $(document).ready(function() {
 
 	});
 	window.clearInterval(window.auto_reloader);
-	btl_start_auto_reload();
+	//btl_start_auto_reload();
 	console.log("READY CALLED");
 	$(document.body).on('click','.sm_modify_btn', function() {
 		id=$(this).data("node-id");

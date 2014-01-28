@@ -49,6 +49,7 @@ class SiteManager {
 		$re->AddScript('$("#remote_ui_path").val("' . $row[remote_ui_path] . '")');
 		$re->AddScript('$("#remote_db_name").val("' . $row[remote_db_name] . '")');
 		$re->AddScript('$("#remote_db_pass").val("' . $row[remote_db_pass] . '")');
+		$re->AddScript('$("#remote_db_user").val("' . $row[remote_db_user] . '")');
 		$re->AddScript('$("#remote_db_host").val("' . $row[remote_db_host] . '")');
 		$re->AddScript('$("#local_db_name").val("' . $row[local_db_name] . '")');
 		$re->AddScript('$("#local_db_user").val("' . $row[local_db_user] . '")');
@@ -72,6 +73,7 @@ class SiteManager {
 			$re=$this->sm_set_form_fields();
 		}
 		$re->AddScript("sm_show_tab('sm_add')");
+		$re->AddScript("sm_unlock_form()");
 		return $re;
 	}
 	function sm_set_local_settings() {
@@ -91,7 +93,7 @@ class SiteManager {
 		$e=0;
 
 		if($values[sm_edit_node_id] == "") {
-			$sql = "INSERT INTO sm_remotes (remote_core_path, ssh_key, ssh_ip, ssh_username, remote_ui_path, remote_db_name, remote_db_pass, remote_db_host, local_db_name, local_db_user, local_db_pass, local_db_host, additional_folders_pull, additional_folders_push, mode, remote_alias) VALUES(";
+			$sql = "INSERT INTO sm_remotes (remote_core_path, ssh_key, ssh_ip, ssh_username, remote_ui_path, remote_db_name, remote_db_pass, remote_db_host, local_db_name, local_db_user, local_db_pass, local_db_host, additional_folders_pull, additional_folders_push, remote_db_user, mode, remote_alias) VALUES(";
 			$sql .= "'" .  SQLite3::escapeString($values[remote_core_path]) . "',";
 			$sql .= "'" .  SQLite3::escapeString($values[ssh_key]) . "',";
 			$sql .= "'" .  SQLite3::escapeString($values[ssh_ip]) . "',";
@@ -106,6 +108,7 @@ class SiteManager {
 			$sql .= "'" .  SQLite3::escapeString($values[local_db_host]) . "',";
 			$sql .= "'" .  SQLite3::escapeString($values[additional_folders_pull]) . "',";
 			$sql .= "'" .  SQLite3::escapeString($values[additional_folders_push]) . "',";
+			$sql .= "'" .  SQLite3::escapeString($values[remote_db_user]) . "',";
 			$sql .= "'" .  SQLite3::escapeString($values[mode]) . "',";
 			$sql .= "'" .  SQLite3::escapeString($values[remote_alias]) . "')";
 		} else {
@@ -122,6 +125,7 @@ class SiteManager {
 			$sql .= "local_db_user='" . SQLite3::escapeString($values[local_db_user]) . "',";
 			$sql .= "local_db_pass='" . SQLite3::escapeString($values[local_db_pass]) . "',";
 			$sql .= "local_db_host='" . SQLite3::escapeString($values[local_db_host]) . "',";
+			$sql .= "remote_db_user='" . SQLite3::escapeString($values[remote_db_user]) . "',";
 			$sql .= "additional_folders_pull='" . SQLite3::escapeString($values[additional_folders_pull]) . "',";
 			$sql .= "additional_folders_push='" . SQLite3::escapeString($values[additional_folders_push]) . "',";
 			$sql .= "mode='" . SQLite3::escapeString($values[mode]) . "',";
